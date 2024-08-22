@@ -111,7 +111,7 @@ async function deployToRemoteChain() {
     signer
   );
 
-  console.log('-------------');
+  console.log('-------------', interchainTokenFactoryContract.deployRemoteInterchainToken);
   // Estimate gas fees
   const gasAmount = await gasEstimator();
 
@@ -124,12 +124,12 @@ async function deployToRemoteChain() {
   // Initiate transaction
   // For the chain names view https://docs.axelar.dev/resources/contract-addresses/testnet
   const txn = await interchainTokenFactoryContract.deployRemoteInterchainToken(
-    "avalance",
+    EvmChain.AVALANCHE,
     salt,
     signer.address,
     EvmChain.BASE_SEPOLIA,
     gasAmount,
-    { value: gasAmount }
+    { value: gasAmount, gasLimit: 8000000 }
   );
 
   console.log(`Transaction Hash: ${txn.hash}`);

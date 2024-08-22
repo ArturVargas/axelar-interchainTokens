@@ -1,0 +1,22 @@
+{
+  "name": "intertokens",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-ignition-ethers": "^0.15.5",
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "dotenv": "^16.4.5",
+    "hardhat": "^2.22.8"
+  },
+  "dependencies": {
+    "@axelar-network/axelarjs-sdk": "^0.16.2",
+    "crypto": "^1.0.1"
+  }
+}

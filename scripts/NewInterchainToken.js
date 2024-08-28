@@ -111,20 +111,19 @@ async function deployToRemoteChain() {
     signer
   );
 
-  console.log('-------------', interchainTokenFactoryContract.deployRemoteInterchainToken);
   // Estimate gas fees
   const gasAmount = await gasEstimator();
 
   console.log('GAS: ', gasAmount)
   // Salt value from deployInterchainToken(). Replace with your own
   const salt =
-    "0xa6fb7365c59dd47ba71a3395bc4b254e362df645bd72f1f84c39a9619c464f53";
+    "0x9203c3926dce7e5facb5d7cfedb3f8837efdc4579d5c82ff4175164ead36d5c5";
 
   console.log(">>>>>>>>>>>>> Signer Address: ", signer.address);
   // Initiate transaction
   // For the chain names view https://docs.axelar.dev/resources/contract-addresses/testnet
   const txn = await interchainTokenFactoryContract.deployRemoteInterchainToken(
-    EvmChain.AVALANCHE,
+    "Avalanche", //EvmChain.AVALANCHE,
     salt,
     signer.address,
     EvmChain.BASE_SEPOLIA,
@@ -135,4 +134,29 @@ async function deployToRemoteChain() {
   console.log(`Transaction Hash: ${txn.hash}`);
 }
 
-deployToRemoteChain().catch(console.error);
+// deployToRemoteChain().catch(console.error);
+
+async function transferTokens() {
+  const [signer] = await ethers.getSigners();
+
+
+  const interchainToken = await getContractInstance(
+    "0xb395260EB094cbA06c6bB24797F841Ded3c50cA1", // Update with new token address
+    interchainTokenContractABI, // Interchain Token contract ABI
+    signer
+  );
+
+  const gasAmount = await gasEstimator();
+
+  // Initiate transfer via token
+  const transfer = await interchainToken.interchainTransfer(
+    EvmChain.BASE_SEPOLIA, // Destination chain
+    "0x6c565df657A7998eedA570cB18DcB8F3BDD8AB1a", // Update with your own wallet address
+    ethers.parseEther("250"), // Transfer 250 tokens
+    "0x", // Empty data payload
+    { value: gasAmount } // Transaction options
+  );
+  console.log("Transfer Transaction Hash:", transfer.hash);
+}
+
+transferTokens().catch(console.error);

@@ -13,6 +13,11 @@ module.exports = {
       chainId: 43113,
       accounts: [PRIVATE_KEY],
     },
+    sepolia: {
+      url: "https://rpc.sepolia.org",
+      chainId: 11155111,
+      accounts: [PRIVATE_KEY],
+    },
     baseSepolia: {
       url: "https://sepolia.base.org",
       chainId: 84532,
